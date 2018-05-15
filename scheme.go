@@ -36,8 +36,8 @@ func generateScheme(poem map[int]string) string {
 
 func saveScheme(scheme string) {
 	schemeFile, createErr := os.Create("./angelou.txt")
-	check(createErr)
+	check(createErr, "I can't write to the file. Do you need to give me write access?")
 	defer schemeFile.Close()
 	_, writeErr := schemeFile.WriteString(scheme)
-	check(writeErr)
+	check(writeErr, "I can't write to the file. Do you need to give me write access?")
 }

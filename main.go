@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -24,7 +23,7 @@ func getFilename() string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter the filepath of your poem: ")
 	text, err := reader.ReadString('\n')
-	check(err)
+	check(err, "I can't read your input. Your typing must be terrible!")
 	cleanFilename := text[:len(text)-1]
 	return cleanFilename
 }
@@ -32,12 +31,10 @@ func getFilename() string {
 func main() {
 	fmt.Println("Welcome to Angelou, a Golang rhymescheme generator!")
 	poem, err := os.Open(getFilename())
-	check(err)
+	check(err, "I can't seem to open your file. Are you sure the filepath is correct?")
 	defer poem.Close()
 	scanner := bufio.NewScanner(poem)
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+	check(scanner.Err(), "I can't seem to read your file. Are you sure it hasn't been corrupted?")
 	go allocate(scanner)
 	done := make(chan bool)
 	go result(done)

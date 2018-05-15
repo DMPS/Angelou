@@ -29,8 +29,8 @@ func niceASCII(ASCII int) int {
 	return cleanASCII
 }
 
-func check(e error) {
+func check(e error, message string) {
 	if e != nil {
-		panic(e)
+		log.Fatal(message)
 	}
 }
