@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 )
 
@@ -21,7 +20,7 @@ var lastSyllables = make(map[int]string)
 
 func getFilename() string {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter the filepath of your poem: ")
+	print("Enter the filepath of your poem: ")
 	text, err := reader.ReadString('\n')
 	check(err, "I can't read your input. Your typing must be terrible!")
 	cleanFilename := text[:len(text)-1]
@@ -29,7 +28,7 @@ func getFilename() string {
 }
 
 func main() {
-	fmt.Println("Welcome to Angelou, a Golang rhymescheme generator!")
+	println("Welcome to Angelou, a Golang rhymescheme generator!")
 	poem, err := os.Open(getFilename())
 	check(err, "I can't seem to open your file. Are you sure the filepath is correct?")
 	defer poem.Close()
@@ -41,5 +40,5 @@ func main() {
 	createWorkerPool(10)
 	<-done
 	saveScheme(generateScheme(lastSyllables))
-	fmt.Println("I have saved your rhyme scheme in ./angelou.txt. Enjoy!")
+	println("I have saved your rhyme scheme in ./angelou.txt. Enjoy!")
 }
